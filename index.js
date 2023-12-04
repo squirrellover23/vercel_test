@@ -3,7 +3,8 @@ const express = require("express");
 
 // Initialize Express
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
