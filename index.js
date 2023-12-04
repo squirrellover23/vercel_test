@@ -1,8 +1,8 @@
 const express = require("express");
 
-const path = require('path');
-const bodyParser = require('body-parser');
-const ejs = require('ejs'); // Require EJS
+//const path = require('path');
+//const bodyParser = require('body-parser');
+//const ejs = require('ejs'); // Require EJS
 
 // Initialize Express
 const app = express();
@@ -15,7 +15,7 @@ const app = express();
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 // Create GET request
 app.get("/", (req, res) => {
