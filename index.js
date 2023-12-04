@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/test', (req, res) => {
-  res.sendFile(path.join(__dirname, 'test.html'));
+  res.sendFile(path.join(__dirname, 'public/test.html'));
 });
 
 // Initialize server
