@@ -2,7 +2,7 @@ const express = require("express");
 
 const path = require('path');
 const bodyParser = require('body-parser');
-const ejs = require('ejs'); // Require EJS
+//const ejs = require('ejs'); // Require EJS
 
 // Initialize Express
 const app = express();
