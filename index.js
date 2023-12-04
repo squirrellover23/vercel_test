@@ -1,10 +1,13 @@
-// Add Express
 const express = require("express");
+
+const path = require('path');
+const bodyParser = require('body-parser');
+const ejs = require('ejs'); // Require EJS
 
 // Initialize Express
 const app = express();
 
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
