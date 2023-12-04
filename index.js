@@ -4,15 +4,15 @@ const path = require('path');
 const bodyParser = require('body-parser');
 //const ejs = require('ejs'); // Require EJS
 
-const port = 5000;
 // Initialize Express
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const port = 5000;
 
-//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
