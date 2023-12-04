@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
+app.get('/test', (req, res) => {
+  res.sendFile(path.join(__dirname, 'test.html'));
+});
+
 // Initialize server
 app.listen(port, () => {
   console.log(`Running on port ${port}.`);
