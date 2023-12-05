@@ -57,19 +57,13 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.get("/createTables", async (req, res) =>{
+app.get("/createTable", async (req, res) =>{
   makeRetQuery(createLoginsTableQ, (err, ret) =>{
     if (err){
       res.status(500).send(err)
     }
   })
-  makeRetQuery(createNameQ, (err, ret) => {
-    if (err){
-      res.status(500).send(err)
-    } else {
-      res.status(200).json({ ret })
-    }
-  })
+  
 
 
   
