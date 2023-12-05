@@ -45,7 +45,7 @@ db.serialize(() => {
 
 */
 
-const createNameQ = `CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE "C", lastName TEXT COLLATE "C", visited INT DEFAULT 0, class TEXT COLLATE "C", lastLoginTime INT DEFAULT 0);`
+const createNameQ = `CREATE TABLE IF NOT EXISTS names2 (firstName TEXT COLLATE "C", lastName TEXT COLLATE "C", visited INT DEFAULT 0, class TEXT COLLATE "C", lastLoginTime INT DEFAULT 0);`
 const createLoginsTableQ = `CREATE TABLE IF NOT EXISTS login_logs (user_id TEXT, login_time TIMESTAMP);`
 
 // Create GET request
