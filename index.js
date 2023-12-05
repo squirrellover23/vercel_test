@@ -1,8 +1,7 @@
 const express = require("express");
-const sqlite3 = require('sqlite3');
 const path = require('path');
 const bodyParser = require('body-parser');
-//const ejs = require('ejs'); // Require EJS
+import { sql } from '@vercel/postgres';
 
 // Initialize Express
 const app = express();
@@ -16,13 +15,50 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const port = 5000;
 
-/*// Configure SQLite database
+async function makeRunQuery(query, retfunc){
+  try {
+    await sql`${query}`;
+  } catch (error) {
+    retfunc(error, null);
+  }
+}
+
+async function makeRetQuery(query, retfunc){
+  try {
+    var response = await sql`${query}`;
+  } catch (error) {
+    retfunc(error, null);
+  }
+  retfunc(null, response)
+}
+
+/*
+// Use the connection URL obtained from your PostgreSQL provider
+const connectionString = 'your-postgresql-connection-url';
+const pool = new Pool({ connectionString });
+
+// Example query
+pool.query('SELECT * FROM your_table', (err, res) => {
+  console.log(err ? err.stack : res.rows);
+  pool.end(); // close connection
+});
+*/
+
+/*
+// Configure SQLite database
 const db = new sqlite3.Database('./database.db');
 db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0)");
     db.run("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);")
 });
+
+
 */
+
+
+makeRunQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", console.log);
+makeRunQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", console.log)
+
 // Create GET request
 app.get("/", (req, res) => {
   res.send("Express on Vercel");
