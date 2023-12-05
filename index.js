@@ -76,10 +76,10 @@ app.get("/createTables", (req, res) =>{
     } else {
       message=row
     }})
-  if (message){
+  if (!message){
     res.status(500).send('Error creating table');
   } else {
-    res.status(200).send(message)
+    res.status(200).json(message)
   }
 });
 
