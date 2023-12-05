@@ -63,16 +63,27 @@ app.get("/", (req, res) => {
 });
 
 app.get("/createTables", (req, res) =>{
-  var error = null;
-  makeRunQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", (err)=>{error=err});
-  makeRunQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", (err)=>{error=err})
-  if (error){
+  var message = null;
+  makeRetQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", (err, res)=>{
+    if (err){
+      message=err
+    } else {
+      message=row
+    }});
+  makeRetQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", (err, res)=>{
+    if (err){
+      message=err
+    } else {
+      message=row
+    }})
+  if (message){
     res.status(500).send('Error creating table');
-
   } else {
-    res.status(200).send('Success?')
+    res.status(200).send(message)
   }
 });
+
+
 
 app.get('/test', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/test.html'));
