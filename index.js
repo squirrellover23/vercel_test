@@ -62,7 +62,14 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.get("/createTables", (req, res) =>{
+app.get("/createTables", async (req, res) =>{
+  try {
+    var response = await sql`${query}`;
+    res.status(200).json({ result })
+  } catch (error) {
+    res.status(500).send({ error })
+  }
+  /*
   var message = null;
   makeRetQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", (err, res)=>{
     if (err){
@@ -81,6 +88,7 @@ app.get("/createTables", (req, res) =>{
   } else {
     res.status(200).json(message)
   }
+  */
 });
 
 
