@@ -2,7 +2,6 @@ const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
 import { sql } from '@vercel/postgres';
-const { Pool } = require('pg');
 
 
 // Initialize Express
@@ -21,8 +20,10 @@ async function makeRunQuery(query, retfunc){
   try {
     await sql`${query}`;
   } catch (error) {
-    retfunc(error, null);
+    retfunc(error);
+    return;
   }
+  retfunc(null)
 }
 
 async function makeRetQuery(query, retfunc){
@@ -34,28 +35,6 @@ async function makeRetQuery(query, retfunc){
   retfunc(null, response)
 }
 /*
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-  ssl: {
-      rejectUnauthorized: false, // Set to true in production
-  },
-});
-*/
-
-
-/*
-// Use the connection URL obtained from your PostgreSQL provider
-const connectionString = 'your-postgresql-connection-url';
-const pool = new Pool({ connectionString });
-
-// Example query
-pool.query('SELECT * FROM your_table', (err, res) => {
-  console.log(err ? err.stack : res.rows);
-  pool.end(); // close connection
-});
-*/
-
-/*
 // Configure SQLite database
 const db = new sqlite3.Database('./database.db');
 db.serialize(() => {
@@ -66,7 +45,12 @@ db.serialize(() => {
 
 */
 
-
+const createNameQ = `CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE "C", lastName TEXT COLLATE "C", visited INT DEFAULT 0, class TEXT COLLATE "C", lastLoginTime INT DEFAULT 0);`
+const createLoginsTableQ = `CREATE TABLE IF NOT EXISTS login_logs (
+  id SERIAL PRIMARY KEY,
+  user_id TEXT,
+  login_time TIMESTAMP
+);`
 
 // Create GET request
 app.get("/", (req, res) => {
@@ -74,19 +58,20 @@ app.get("/", (req, res) => {
 });
 
 app.get("/createTables", async (req, res) =>{
-  
-  try {
-    var response = await sql`CREATE TABLE IF NOT EXISTS names (
-      firstName TEXT COLLATE "C",
-      lastName TEXT COLLATE "C",
-      visited INT DEFAULT 0,
-      class TEXT COLLATE "C",
-      lastLoginTime INT DEFAULT 0
-  );`
-    res.status(200).json({ response })
-  } catch (error) {
-    res.status(500).send(error)
-  }
+  makeRetQuery(createLoginsTableQ, (err, ret) =>{
+    if (err){
+      res.status(500).send(err)
+    }
+  })
+  makeRetQuery(createNameQ, (err, ret) => {
+    if (err){
+      res.status(500).send(err)
+    } else {
+      res.status(200).json({ ret })
+    }
+  })
+
+
   
   /*
   var message = null;
