@@ -63,17 +63,14 @@ app.get("/", (req, res) => {
 
 app.get("/createTable", async (req, res) =>{
   try {
-    var response = await sql`CREATE TABLE IF NOT EXISTS names22 (
-      firstName TEXT COLLATE "C",
-      lastName TEXT COLLATE "C",
-      visited INT DEFAULT 0,
-      class TEXT COLLATE "C",
-      lastLoginTime INT DEFAULT 0
-    );`
+    var response = await sql`CREATE TABLE IF NOT EXISTS login_logs (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT,
+      login_time TIMESTAMP
+  );`
     res.status(200).json({ response })
 
   } catch (error) {
-    res.status(500).send(err)
     res.status(500).send(err)
 
   }
