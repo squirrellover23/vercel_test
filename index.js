@@ -56,12 +56,22 @@ db.serialize(() => {
 */
 
 
-makeRunQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", console.log);
-makeRunQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", console.log)
 
 // Create GET request
 app.get("/", (req, res) => {
   res.send("Express on Vercel");
+});
+
+app.post("/createTables", (req, res) =>{
+  var error = null;
+  makeRunQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", (err)=>{error=err});
+  makeRunQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", (err)=>{error=err})
+  if (error){
+    res.status(500).send('Error creating table');
+
+  } else {
+    res.status(200).send('Success?')
+  }
 });
 
 app.get('/test', (req, res) => {
