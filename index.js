@@ -33,14 +33,14 @@ async function makeRetQuery(query, retfunc){
   }
   retfunc(null, response)
 }
-
+/*
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
   ssl: {
       rejectUnauthorized: false, // Set to true in production
   },
 });
-
+*/
 
 
 /*
