@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
 
 app.get("/createTable", async (req, res) =>{
   console.log('where is this ')
-  makeRetQuery(createLoginsTableQ, (err, ret) =>{
+  makeRetQuery(createNameQ, (err, ret) =>{
     if (err){
       console.log(err)
       res.status(500).send(err)
