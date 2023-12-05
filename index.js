@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.post("/createTables", (req, res) =>{
+app.get("/createTables", (req, res) =>{
   var error = null;
   makeRunQuery("CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0);", (err)=>{error=err});
   makeRunQuery("CREATE TABLE IF NOT EXISTS login_logs (id INTEGER PRIMARY KEY, user_id TEXT, login_time DATETIME);", (err)=>{error=err})
