@@ -2,6 +2,8 @@ const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
 import { sql } from '@vercel/postgres';
+const { Pool } = require('pg');
+
 
 // Initialize Express
 const app = express();
@@ -67,7 +69,7 @@ app.get("/createTables", async (req, res) =>{
     var response = await sql`${query}`;
     res.status(200).json({ response })
   } catch (error) {
-    res.status(500).send({ error })
+    res.status(500).json({ error })
   }
   /*
   var message = null;
