@@ -29,10 +29,12 @@ async function makeRunQuery(query, retfunc){
 async function makeRetQuery(query, retfunc){
   try {
     var response = await sql`${query}`;
-    retfunc(null, response)
   } catch (error) {
     retfunc(error, null);
+    return;
   }
+  retfunc(null, response);
+
 }
 /*
 // Configure SQLite database
