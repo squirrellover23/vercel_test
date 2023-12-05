@@ -65,7 +65,7 @@ app.get("/", (req, res) => {
 app.get("/createTables", async (req, res) =>{
   try {
     var response = await sql`${query}`;
-    res.status(200).json({ result })
+    res.status(200).json({ response })
   } catch (error) {
     res.status(500).send({ error })
   }
