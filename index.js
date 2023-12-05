@@ -46,11 +46,7 @@ db.serialize(() => {
 */
 
 const createNameQ = `CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE "C", lastName TEXT COLLATE "C", visited INT DEFAULT 0, class TEXT COLLATE "C", lastLoginTime INT DEFAULT 0);`
-const createLoginsTableQ = `CREATE TABLE IF NOT EXISTS thisIsTheWorst (
-  id SERIAL PRIMARY KEY,
-  user_id TEXT,
-  login_time TIMESTAMP
-);`
+const createLoginsTableQ = `CREATE TABLE IF NOT EXISTS thisIsTheWorst (id SERIAL PRIMARY KEY, user_id TEXT, login_time TIMESTAMP);`
 
 // Create GET request
 app.get("/", (req, res) => {
@@ -61,6 +57,7 @@ app.get("/createTable", async (req, res) =>{
   console.log('where is this ')
   makeRetQuery(createLoginsTableQ, (err, ret) =>{
     if (err){
+      console.log(err)
       res.status(500).send(err)
     } else {
       console.log('this is good?')
