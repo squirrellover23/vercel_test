@@ -62,17 +62,27 @@ app.get("/", (req, res) => {
 });
 
 app.get("/createTable", async (req, res) =>{
+  try {
+    var response = await sql`${createNameQ}`
+    res.status(200).json({ response })
+
+  } catch (error) {
+    res.status(500).send(err)
+    res.status(500).send(err)
+
+  }
+  /*
   console.log('where is this ')
   makeRetQuery(createNameQ, (err, ret) =>{
     if (err){
-      console.log(err)
+      res.status(500).send(err)
       res.status(500).send(err)
     } else {
       console.log('this is good?')
       res.status(200).json({ ret })
     }
   })
-
+  */
 });
 
 
