@@ -2,7 +2,7 @@ const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
 import { sql } from '@vercel/postgres';
-const { Pool } = require('pg');
+//const { Pool } = require('pg');
 
 
 // Initialize Express
@@ -33,6 +33,16 @@ async function makeRetQuery(query, retfunc){
   }
   retfunc(null, response)
 }
+/*
+const connectionString = 'your-postgresql-connection-url';
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+      rejectUnauthorized: false, // Set to true in production
+  },
+});
+*/
+
 
 /*
 // Use the connection URL obtained from your PostgreSQL provider
@@ -66,10 +76,10 @@ app.get("/", (req, res) => {
 
 app.get("/createTables", async (req, res) =>{
   try {
-    var response = await sql`${query}`;
+    var response = await sql`CREATE TABLE IF NOT EXISTS names (firstName TEXT COLLATE NOCASE, lastName TEXT COLLATE NOCASE, visited INT DEFAULT 0, class TEXT COLLATE NOCASE, lastLoginTime INT DEFAULT 0)`
     res.status(200).json({ response })
   } catch (error) {
-    res.status(500).json({ error })
+    res.status(500).send("bruh")
   }
   /*
   var message = null;
